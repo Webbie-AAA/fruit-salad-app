@@ -5241,12 +5241,14 @@ require('dotenv').config();
 const fruitForm = document.querySelector("#inputSection form");
 const fruitList = document.querySelector("#fruitSection ul");
 const fruitNutrition = document.querySelector("#nutritionSection p");
+const createForm = document.querySelector("#create-form");
 
 let cal = 0;
 const fruitCal = {};
 const apiKey = process.env.API_KEY
 
 fruitForm.addEventListener("submit", extractFruit);
+createForm.addEventListener("submit", createNewFruit);
 
 function extractFruit(e) {
     e.preventDefault();
@@ -5296,6 +5298,21 @@ function removeFruit(e) {
 
     delete fruitCal[fruitName];
     e.target.remove();
+}
+//Every time are waiting for something, we have an async function, and before the thing we wait for we add the await
+async function createNewFruit(e){
+    e.preventDefault(); //so the page doesn't reload as soon as the user clicks submit
+    const data = {
+        name: e.target.fruitCreate.value
+    }
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    }
+    const response = await fetch(`https://backend-fruit-salad-app.onrender.com/fruits`)
 }
 
 }).call(this)}).call(this,require('_process'))
