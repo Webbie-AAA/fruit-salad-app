@@ -2,6 +2,7 @@ const fruitForm = document.querySelector("#inputSection form");
 const fruitList = document.querySelector("#fruitSection ul");
 const fruitNutrition = document.querySelector("#nutritionSection p");
 const createForm = document.querySelector("#create-form");
+const deleteForm = document.querySelector("#delete-form");
 
 
 let cal = 0;
@@ -10,6 +11,7 @@ const apiKey = "58058895-8eb47e4c9541afe0412851749";
 
 fruitForm.addEventListener("submit", extractFruit);
 createForm.addEventListener("submit", createNewFruit);
+deleteForm.addEventListener("submit", deleteFruit);
 
 function extractFruit(e) {
     e.preventDefault();
@@ -74,6 +76,7 @@ async function createNewFruit(e){
         body: JSON.stringify(data)
     }
     const response = await fetch(`https://backend-fruit-salad-app.onrender.com/fruits`, options)
+    console.log(response)
 
     let messageStatus = document.querySelector('#message')
 
@@ -92,3 +95,34 @@ async function createNewFruit(e){
         }, 4000)
     }
 }
+
+async function deleteFruit(e){
+    e.preventDefault();
+    const data = e.target.deleteFruit.value
+    
+   
+    const options = {
+        method: "DELETE"
+    }
+    
+    
+    const response = await fetch(`https://backend-fruit-salad-app.onrender.com/fruits/${data}`, options)
+    console.log(response.status)
+    let messageStatus = document.querySelector('#delete-message');
+
+    if (response.status === 204){
+        e.target.deleteFruit.value = '';
+        messageStatus.textContent = 'Fruit Successfully Deleted';
+        setTimeout(()=>{
+            messageStatus.textContent = ''
+        }, 4000)
+    } else {
+        e.target.deleteFruit.value = '';
+        messageStatus.textContent = "This fruit doesn't exist. There is nothing to delete";
+        setTimeout(()=>{
+            messageStatus.textContent='';
+        }, 4000)
+
+    }
+}
+
