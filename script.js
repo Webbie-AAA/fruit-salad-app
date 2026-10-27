@@ -1,13 +1,12 @@
-require('dotenv').config();
-
 const fruitForm = document.querySelector("#inputSection form");
 const fruitList = document.querySelector("#fruitSection ul");
 const fruitNutrition = document.querySelector("#nutritionSection p");
 const createForm = document.querySelector("#create-form");
 
+
 let cal = 0;
 const fruitCal = {};
-const apiKey = process.env.API_KEY
+const apiKey = "58058895-8eb47e4c9541afe0412851749";
 
 fruitForm.addEventListener("submit", extractFruit);
 createForm.addEventListener("submit", createNewFruit);
@@ -74,5 +73,22 @@ async function createNewFruit(e){
         },
         body: JSON.stringify(data)
     }
-    const response = await fetch(`https://backend-fruit-salad-app.onrender.com/fruits`)
+    const response = await fetch(`https://backend-fruit-salad-app.onrender.com/fruits`, options)
+
+    let messageStatus = document.querySelector('#message')
+
+    if (response.status === 201) {
+        e.target.fruitCreate.value = '';
+        messageStatus.textContent = 'Fruit successfully created.'
+        setTimeout(() => {
+            messageStatus.textContent = ''
+        }, 4000)
+    } else {
+        e.target.fruitCreate.value = ''
+        messageStatus.textContent = 'This fruit already exists. Please enter another one.'
+        setTimeout(()=>{
+            messageStatus.textContent='';
+
+        }, 4000)
+    }
 }
