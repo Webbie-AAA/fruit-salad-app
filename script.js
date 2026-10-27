@@ -17,7 +17,7 @@ function extractFruit(e) {
 async function fetchFruitData(fruit) {
     try {
         //Make sure to replace this link with your deployed API URL in this fetch
-        const respData = await fetch(`https://fruit-api-5v0j.onrender.com/fruits/${fruit}`);
+        const respData = await fetch(`https://backend-fruit-salad-app.onrender.com/fruits/${fruit}`);
         const respImg = await fetch(
             `https://pixabay.com/api/?q=${fruit}+fruit&key=${apiKey}`
         );
