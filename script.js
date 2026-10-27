@@ -1,10 +1,12 @@
+require('dotenv').config();
+
 const fruitForm = document.querySelector("#inputSection form");
 const fruitList = document.querySelector("#fruitSection ul");
 const fruitNutrition = document.querySelector("#nutritionSection p");
 
 let cal = 0;
 const fruitCal = {};
-const apiKey = "58058895-8eb47e4c9541afe0412851749";
+const apiKey = process.env.API_KEY
 
 fruitForm.addEventListener("submit", extractFruit);
 
